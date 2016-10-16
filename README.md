@@ -11,7 +11,7 @@ y1 = np.load("labels_color.npy")
 
 y2 = np.load("labels_quality.npy")
 
-y2 = np.load("labels_quality_binary.npy")
+y3 = np.load("labels_quality_binary.npy")
 
 > insert scikit-learn code here
 
