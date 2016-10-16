@@ -1,6 +1,6 @@
-# CPSC_483_Project_1
-
-TO START:
-import numpy as np
-np.load("winequality-full.npy")
-# __ scikit-learn code here __
+# CPSC_483_Project_1\n
+\n
+TO START:\n
+import numpy as np\n
+np.load("winequality-full.npy")\n
+# __ scikit-learn code here __\n
