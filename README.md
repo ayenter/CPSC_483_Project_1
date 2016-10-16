@@ -1,4 +1,4 @@
-# CPSC_483_Project_1\n
+# CPSC_483_Project_1
 
 
 **TO START:**
