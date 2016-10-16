@@ -4,24 +4,19 @@ import numpy as np
 file_name_red = "winequality-red.csv"
 file_name_white = "winequality-white.csv"
 
-file_name_output = "winequality-full.npy"
+file_name_predictors = "predictors.npy"
+file_name_labels_color = "labels_color.npy"
+file_name_labels_quality = "labels_quality.npy"
 
 dataset1 = np.loadtxt(open(file_name_red,"rb"), delimiter=";",skiprows=1)
 dataset2 = np.loadtxt(open(file_name_white,"rb"), delimiter=";",skiprows=1)
 
-print("Red Wine Dataset shape: " + str(dataset1.shape))
-print("White Wine Dataset shape: " + str(dataset2.shape))
+target_color = np.append(np.zeros((len(dataset1),1)), np.ones((len(dataset2),1)), 0)
 
-dataset1 = np.append(dataset1, np.zeros((len(dataset1),1)),1)
-dataset2 = np.append(dataset2, np.ones((len(dataset2),1)),1)
+target_quality = np.append(dataset1[:,len(dataset1[0])-1], dataset2[:,len(dataset2[0])-1], 0)
 
-print("Red Wine Dataset reshaped: " + str(dataset1.shape))
-print("White Wine Dataset reshaped: " + str(dataset2.shape))
+dataset = np.append(np.delete(dataset1, len(dataset1[0])-1, 1), np.delete(dataset2, len(dataset2[0])-1, 1), 0)
 
-dataset3 = np.append(dataset1, dataset2, 0)
-
-print("Full Wine Dataset shape: " + str(dataset3.shape))
-
-np.save(file_name_output, dataset3)
-
-# np.load(file_name_output)
+np.save(file_name_predictors, dataset)
+np.save(file_name_labels_color, target_color)
+np.save(file_name_labels_quality, target_quality)
