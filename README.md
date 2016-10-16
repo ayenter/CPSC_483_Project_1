@@ -7,4 +7,4 @@ import numpy as np
 
 np.load("winequality-full.npy")
 
-# __ scikit-learn code here __
+_*_ insert scikit-learn code here _*_
