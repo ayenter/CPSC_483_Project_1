@@ -1,10 +1,14 @@
 import numpy as np
 
 
+test_percent = .2
+
 file_name_red = "winequality-red.csv"
 file_name_white = "winequality-white.csv"
 
 file_name_predictors = "predictors.npy"
+file_name_train_predictors = "train_predictors.npy"
+file_name_test_predictors = "test_predictors.npy"
 file_name_labels_color = "labels_color.npy"
 file_name_labels_quality = "labels_quality.npy"
 file_name_labels_quality_binary = "labels_quality_binary.npy"
@@ -27,7 +31,17 @@ target_quality_binary = np.asarray(list_bi_quality)
 
 dataset = np.append(np.delete(dataset1, len(dataset1[0])-1, 1), np.delete(dataset2, len(dataset2[0])-1, 1), 0)
 
+test_indexes = np.random.choice(dataset.shape[0], int(dataset.shape[0]*test_percent), replace=False)
+train_indexes = np.setdiff1d(np.arange(dataset.shape[0]), test_indexes)
+
+train_dataset = dataset[np.random.choice(dataset.shape[0], 2, replace=False),:]
+test_dataset = dataset[np.random.choice(dataset.shape[0], 2, replace=False),:]
+
 np.save(file_name_predictors, dataset)
-np.save(file_name_labels_color, target_color)
+np.save(file_name_train_predictors, train_dataset)
+np.save(file_name_test_predictors, test_dataset)
+np.save(file_name_labels_color, target_color.ravel())
 np.save(file_name_labels_quality, target_quality)
 np.save(file_name_labels_quality_binary, target_quality_binary)
+
+
