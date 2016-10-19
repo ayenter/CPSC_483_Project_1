@@ -1,3 +1,5 @@
+# ~~~ Author: Alec Yenter ~~~
+
 # === imports ===
 
 import numpy as np
