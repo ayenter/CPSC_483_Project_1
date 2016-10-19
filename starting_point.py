@@ -32,6 +32,7 @@ X_train = X[train_indexes,:]
 X_test = X[test_indexes,:]
 
 
+# *** FOR KNN ONLY ***
 # --- FUNCTION: get best number of neighbors using squared error ---
 # --- get_best_n_neighbors( [int], numpy.ndarray, numpy.ndarray, numpy.ndarray, numpy.ndarray ) ---
 def get_best_n_neighbors( possible_ns, a_y_train, a_y_test, a_X_train, a_X_test ):
@@ -46,21 +47,31 @@ def get_best_n_neighbors( possible_ns, a_y_train, a_y_test, a_X_train, a_X_test 
 			best_n_neighbors = temp_n_neighbors
 			best_sq_error = temp_sq_error
 	return best_n_neighbors;
+# *** ------------ ***
 
 
 # --- fit classifier ---
 for y in [[y_color, "Color"] , [y_quality, "Quality"], [y_quality_binary, "Binary Quality"]]:
 	y_train = y[0][train_indexes]
 	y_test = y[0][test_indexes]
-	n_neighbors = get_best_n_neighbors(range(1,30,2), y_train, y_test, X_train, X_test)
-	print (y[1] + " Neighbors: " + str(n_neighbors))
-	clf = neighbors.KNeighborsClassifier(n_neighbors, weights="uniform", p=len(X[0]))
+
+	# *** FOR KNN ONLY ***
+	# n_neighbors = get_best_n_neighbors(range(1,30,2), y_train, y_test, X_train, X_test)
+	# print (y[1] + " Neighbors: " + str(n_neighbors))
+	# *** ------------ ***
+	
+	clf = # SCIKIT-LEARN ALGORITHM
 	clf.fit(X_train, y_train)
+	
 	print (y[1] + " Squared Error: " + str(((clf.predict(X_test)-y_test)**2).sum()))
+	
 	plt.scatter(y_test,clf.predict(X_test))
+	
 	plt.xlabel('Actual')
 	plt.ylabel('Predicted')
+	
 	plt.title(y[1])
+	
 	plt.show()
 
 
