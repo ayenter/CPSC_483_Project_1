@@ -1,14 +1,15 @@
-# ~~~ Author: Tom Bernard ~~~
+# ~~~ Author: Jared Nanoff ~~~
 
 # === imports ===
 
-import warnings
-import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-from sklearn import neighbors, datasets, linear_model
 from sklearn.metrics import confusion_matrix
+from sklearn.naive_bayes import GaussianNB
+import warnings
+import itertools
+from sklearn import neighbors, datasets, linear_model
 
 
 # === code ===
@@ -84,7 +85,7 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
 	print ("\n --- " + title + " --- ")
 
 	# --- run algorithm ---
-	clf = linear_model.LinearRegression()
+	clf = GaussianNB()
 	with warnings.catch_warnings():
 		warnings.simplefilter("ignore")
 		clf.fit(X_train, y_train)
@@ -107,3 +108,7 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
 plt.show()
 
 print ("")
+
+
+
+
