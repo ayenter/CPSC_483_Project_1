@@ -7,7 +7,7 @@ import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-from sklearn import neighbors, datasets
+from sklearn import neighbors, datasets, metrics
 from sklearn.metrics import confusion_matrix
 from sklearn.neighbors import KNeighborsRegressor
 
@@ -111,7 +111,7 @@ while the_k >= 1:
 
 		# --- print info ---
 		print ("\n --- " + title + " --- ")
-		print ("Approx. best k is " + str(get_best_n_neighbors(range(1,30,2), y_train, y_test, X_train, X_test)))
+		print ("(Approx. best k is " + str(get_best_n_neighbors(range(1,30,2), y_train, y_test, X_train, X_test)) + ")")
 
 		# --- run algorithm ---
 		clf = KNeighborsRegressor(n_neighbors, weights="uniform", p=len(X[0]))
@@ -119,6 +119,7 @@ while the_k >= 1:
 
 		# --- print error ---
 		print ("Squared Error: " + str(((clf.predict(X_test)-y_test)**2).sum()))
+		print ("Accuracy Score: " + str(metrics.accuracy_score(y_test, clf.predict(X_test))))
 
 		# --- plotting ---
 		plt.figure(1)
@@ -138,4 +139,3 @@ while the_k >= 1:
 	the_k = get_valid_input("\nEnter k ('0' to exit): ")
 
 print ("")
-

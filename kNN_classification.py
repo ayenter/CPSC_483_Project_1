@@ -7,7 +7,7 @@ import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-from sklearn import neighbors, datasets
+from sklearn import neighbors, datasets, metrics
 from sklearn.metrics import confusion_matrix
 
 
@@ -118,6 +118,7 @@ while the_k >= 1:
 
 		# --- print error ---
 		print ("Squared Error: " + str(((clf.predict(X_test)-y_test)**2).sum()))
+		print ("Accuracy Score: " + str(metrics.accuracy_score(y_test, clf.predict(X_test))))
 
 		# --- plotting ---
 		plt.figure(1)

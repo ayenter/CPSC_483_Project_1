@@ -1,4 +1,4 @@
-# ~~~ Author: Jared Nanoff ~~~
+# ~~~ Author: Patrick Ryan ~~~
 
 # === imports ===
 
@@ -9,7 +9,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.naive_bayes import GaussianNB
 import warnings
 import itertools
-from sklearn import neighbors, datasets, linear_model
+from sklearn import neighbors, datasets, linear_model, metrics
 
 
 # === code ===
@@ -92,6 +92,7 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
 
 	# --- print error ---
 	print ("Squared Error: " + str(((clf.predict(X_test)-y_test)**2).sum()))
+	print ("Accuracy Score: " + str(metrics.accuracy_score(y_test, clf.predict(X_test))))
 
 	# --- plotting ---
 	plt.figure(1)
@@ -108,7 +109,3 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
 plt.show()
 
 print ("")
-
-
-
-
