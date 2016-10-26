@@ -58,10 +58,27 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
 
-
-# --- fit classifier ---
 plt.figure(1, figsize=(15,10))
 plt.figure(2, figsize=(15,10))
+plt.figure(3, figsize=(15,10))
+
+# --- FUNCTION: add ROC graph to plot ---
+# --- plot_ROC(int, numpy.ndarray (2D), numpy.ndarray (2D), string) ---
+# --- credit: http://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
+def plot_ROC(subplt, y_test, predicted, title):
+    plt.figure(3)
+    plt.subplot(subplt)
+    false_positive_rate, true_positive_rate, thresholds = metrics.roc_curve(y_test, predicted)
+    roc_auc = metrics.auc(false_positive_rate, true_positive_rate)
+    plt.title('Receiver Operating Characteristic for ' + title)
+    plt.plot(false_positive_rate, true_positive_rate, 'b', label='AUC = %0.2f'% roc_auc)
+    plt.legend(loc='lower right')
+    plt.plot([0,1],[0,1],'r--')
+    plt.xlim([-0.1,1.2])
+    plt.ylim([-0.1,1.2])
+    plt.ylabel('True Positive Rate')
+    plt.xlabel('False Positive Rate')
+
 for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, "Quality", 232], [y_quality, the_X_w_color, "Quality with Color as a Feature", 235], [y_quality_binary, the_X, "Binary Quality", 233, ["Low", "High"]], [y_quality_binary, the_X_w_color, "Binary Quality with Color as a Feature", 236, ["Low", "High"]]]:
 	
 	# --- set data variables ---
@@ -93,6 +110,7 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
 	# --- print error ---
 	print ("Squared Error: " + str(((predicted-y_test)**2).sum()))
 	print ("Accuracy Score: " + str(metrics.accuracy_score(y_test, predicted_rounded)))
+	print ("R2 value: " + str(metrics.r2_score(y_test, predicted)))
 
 	# --- plotting ---
 	if len(z) == 5:
@@ -110,6 +128,14 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
 	plt.figure(2)
 	plt.subplot(plt_pos)
 	plot_confusion_matrix(confusion_matrix(y_test, predicted_rounded), classes=labels)
+
+	# --- Logistic Regression only. Generate ROC graphs ---
+	if title == "Color":
+		plot_ROC(221, y_test, predicted, title)
+	elif title == "Binary Quality":
+		plot_ROC(222, y_test, predicted, title)
+	elif title == "Binary Quality with Color as a Feature":
+		plot_ROC(223, y_test, predicted, title)
 
 # --- display plot ---
 plt.show()
