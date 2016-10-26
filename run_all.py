@@ -12,3 +12,6 @@ import linear_regression
 print("\n *** *** *** *** *********** *** *** *** *** ")
 print(" *** *** *** *** NAIVE BAYES *** *** *** *** ")
 import naive_bayes
+print("\n *** *** *** *** *********** *** *** *** *** ")
+print(" *** *** *** *** LOGISTIC REGRESSION *** *** *** *** ")
+import logistic_regression

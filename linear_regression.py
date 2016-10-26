@@ -61,17 +61,13 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
 # --- fit classifier ---
 plt.figure(1, figsize=(15,10))
 plt.figure(2, figsize=(15,10))
-for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, "Quality", 232], [y_quality, the_X_w_color, "Quality with Color as a Feature", 235], [y_quality_binary, the_X, "Binary Quality", 233], [y_quality_binary, the_X_w_color, "Binary Quality with Color as a Feature", 236]]:
+for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, "Quality", 232], [y_quality, the_X_w_color, "Quality with Color as a Feature", 235], [y_quality_binary, the_X, "Binary Quality", 233, ["Low", "High"]], [y_quality_binary, the_X_w_color, "Binary Quality with Color as a Feature", 236, ["Low", "High"]]]:
 	
 	# --- set data variables ---
 	y = z[0]
 	X = z[1]
 	title = z[2]
 	plt_pos = z[3]
-	if len(z) == 5:
-		labels = z[4]
-	else:
-		labels = range(int(y.max()))
 
 	# --- split training and testing ---
 	X_train = X[train_indexes,:]
@@ -89,20 +85,30 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
 		warnings.simplefilter("ignore")
 		clf.fit(X_train, y_train)
 
+	# --- results ---
+	predicted = clf.predict(X_test)
+	predicted_rounded = np.asarray([0 if x<0 else x for x in np.round(predicted)])
+
 	# --- print error ---
-	print ("Squared Error: " + str(((clf.predict(X_test)-y_test)**2).sum()))
-	print ("Accuracy Score: " + str(metrics.accuracy_score(y_test, [0 if x<0 else x for x in np.round(clf.predict(X_test))])))
+	print ("Squared Error: " + str(((predicted-y_test)**2).sum()))
+	print ("Accuracy Score: " + str(metrics.accuracy_score(y_test, predicted_rounded)))
 
 	# --- plotting ---
+	if len(z) == 5:
+		labels = z[4]
+	else:
+		test_max = max( int(y_test.max()), int(predicted_rounded.max()) )
+		test_min = min( int(y_test.min()), int(predicted_rounded.min()) )
+		labels = range(test_min, test_max+1)
 	plt.figure(1)
 	plt.subplot(plt_pos)
-	plt.scatter(y_test,clf.predict(X_test))
+	plt.scatter(y_test,predicted)
 	plt.xlabel('Actual')
 	plt.ylabel('Predicted')
 	plt.title(title)
 	plt.figure(2)
 	plt.subplot(plt_pos)
-	plot_confusion_matrix(confusion_matrix(y_test, [0 if x<0 else x for x in np.round(clf.predict(X_test))]), classes=labels)
+	plot_confusion_matrix(confusion_matrix(y_test, predicted_rounded), classes=labels)
 
 # --- display plot ---
 plt.show()
