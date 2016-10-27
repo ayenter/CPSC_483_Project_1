@@ -99,7 +99,7 @@ def plot_ROC(subplt, y_test, predicted, title):
     plt.xlabel('False Positive Rate')
 
 # --- input ---
-the_k = get_valid_input("\nEnter k ('0' to exit): ")
+the_k = get_valid_input("\nEnter k ('0' to stop kNN classification): ")
 
 # --- fit classifier ---
 while the_k >= 1:
@@ -155,7 +155,7 @@ while the_k >= 1:
 		plt.title(title)
 		plt.figure(2)
 		plt.subplot(plt_pos)
-		plot_confusion_matrix(confusion_matrix(y_test, predicted_rounded), classes=labels)
+		plot_confusion_matrix(confusion_matrix(y_test, predicted_rounded), classes=labels, title=title)
 
 		# --- Logistic Regression only. Generate ROC graphs ---
 		if title == "Color":

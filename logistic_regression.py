@@ -127,7 +127,7 @@ for z in [[y_color, the_X, "Color", 231, ["red", "white"]] , [y_quality, the_X, 
     plt.title(title)
     plt.figure(2)
     plt.subplot(plt_pos)
-    plot_confusion_matrix(confusion_matrix(y_test, predicted_rounded), classes=labels)
+    plot_confusion_matrix(confusion_matrix(y_test, predicted_rounded), classes=labels, title=title)
 
     # --- Logistic Regression only. Generate ROC graphs ---
     if title == "Color":
